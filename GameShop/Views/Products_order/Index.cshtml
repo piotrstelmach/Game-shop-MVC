@@ -1,0 +1,87 @@
+﻿@model IEnumerable<GameShop.Models.Products_order>
+
+@{
+    ViewBag.Title = "Products orders";
+}
+
+<h2>Products orders</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Payed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sended)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sended_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Products_to_order_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.Street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_status.Order_status1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total_price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sended)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sended_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Products_to_order_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.Street)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_status.Order_status1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

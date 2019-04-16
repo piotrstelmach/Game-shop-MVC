@@ -1,0 +1,98 @@
+﻿@model GameShop.Models.Products_order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Products_order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sended)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sended)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sended_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sended_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Products_to_order_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Products_to_order_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.Street)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address.Street)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order_status.Order_status1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order_status.Order_status1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

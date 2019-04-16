@@ -1,0 +1,39 @@
+﻿@model IEnumerable<GameShop.Models.Products_to_order>
+
+@{
+    ViewBag.Title = "Products to order";
+}
+
+<h2>Products to order</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Product.Product_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Products_order.User_id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Product_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Products_order.User_id)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_Products_to_order }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_Products_to_order }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_Products_to_order })
+        </td>
+    </tr>
+}
+
+</table>

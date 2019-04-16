@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ShopDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Street" Type="varchar" MaxLength="20" />
+          <Property Name="House_number" Type="int" />
+          <Property Name="Flat_number" Type="int" />
+          <Property Name="Country" Type="varchar" MaxLength="40" />
+          <Property Name="Zip_code" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="Avalibility">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Avalibility" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Language_name" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Order_status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order_status" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Producent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Producent_name" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_name" Type="varchar" MaxLength="40" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Category_id" Type="int" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Language_id" Type="int" />
+          <Property Name="Avalibility_id" Type="int" />
+          <Property Name="Producent_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Products_order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Total_price" Type="money" />
+          <Property Name="Order_status_id" Type="int" />
+          <Property Name="Payed" Type="bit" />
+          <Property Name="Sended" Type="bit" />
+          <Property Name="Order_date" Type="date" />
+          <Property Name="Sended_date" Type="date" />
+          <Property Name="Address_id" Type="int" />
+          <Property Name="User_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Products_to_order_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Products_to_order">
+          <Key>
+            <PropertyRef Name="id_Products_to_order" />
+          </Key>
+          <Property Name="id_Products_to_order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Products_order_id" Type="int" Nullable="false" />
+          <Property Name="Product_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__Product__Avalibi__7D439ABD">
+          <End Role="Avalibility" Type="Self.Avalibility" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Avalibility">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Avalibility_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__7B5B524B">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Languag__7C4F7684">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Produce__7E37BEF6">
+          <End Role="Producent" Type="Self.Producent" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Producent_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Addre__787EE5A0">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Order__778AC167">
+          <End Role="Order_status" Type="Self.Order_status" Multiplicity="0..1" />
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Order_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Produ__01142BA1">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_to_order">
+              <PropertyRef Name="Product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Produ__02084FDA">
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="1" />
+          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products_order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_to_order">
+              <PropertyRef Name="Products_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShopDBModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Avalibility" EntityType="Self.Avalibility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_status" EntityType="Self.Order_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producent" EntityType="Self.Producent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products_order" EntityType="Self.Products_order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products_to_order" EntityType="Self.Products_to_order" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Product__Avalibi__7D439ABD" Association="Self.FK__Product__Avalibi__7D439ABD">
+            <End Role="Avalibility" EntitySet="Avalibility" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__7B5B524B" Association="Self.FK__Product__Categor__7B5B524B">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Languag__7C4F7684" Association="Self.FK__Product__Languag__7C4F7684">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Produce__7E37BEF6" Association="Self.FK__Product__Produce__7E37BEF6">
+            <End Role="Producent" EntitySet="Producent" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Addre__787EE5A0" Association="Self.FK__Products___Addre__787EE5A0">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Order__778AC167" Association="Self.FK__Products___Order__778AC167">
+            <End Role="Order_status" EntitySet="Order_status" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Produ__01142BA1" Association="Self.FK__Products___Produ__01142BA1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Products_to_order" EntitySet="Products_to_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Produ__02084FDA" Association="Self.FK__Products___Produ__02084FDA">
+            <End Role="Products_order" EntitySet="Products_order" />
+            <End Role="Products_to_order" EntitySet="Products_to_order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShopDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="House_number" Type="Int32" />
+          <Property Name="Flat_number" Type="Int32" />
+          <Property Name="Country" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Zip_code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products_order" Relationship="Self.FK__Products___Addre__787EE5A0" FromRole="Address" ToRole="Products_order" />
+        </EntityType>
+        <EntityType Name="Avalibility">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Avalibility1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__Avalibi__7D439ABD" FromRole="Avalibility" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__Categor__7B5B524B" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Language_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__Languag__7C4F7684" FromRole="Language" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Order_status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order_status1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products_order" Relationship="Self.FK__Products___Order__778AC167" FromRole="Order_status" ToRole="Products_order" />
+        </EntityType>
+        <EntityType Name="Producent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Producent_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__Produce__7E37BEF6" FromRole="Producent" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Category_id" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Language_id" Type="Int32" />
+          <Property Name="Avalibility_id" Type="Int32" />
+          <Property Name="Producent_id" Type="Int32" />
+          <NavigationProperty Name="Avalibility" Relationship="Self.FK__Product__Avalibi__7D439ABD" FromRole="Product" ToRole="Avalibility" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__7B5B524B" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Language" Relationship="Self.FK__Product__Languag__7C4F7684" FromRole="Product" ToRole="Language" />
+          <NavigationProperty Name="Producent" Relationship="Self.FK__Product__Produce__7E37BEF6" FromRole="Product" ToRole="Producent" />
+          <NavigationProperty Name="Products_to_order" Relationship="Self.FK__Products___Produ__01142BA1" FromRole="Product" ToRole="Products_to_order" />
+        </EntityType>
+        <EntityType Name="Products_order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Total_price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Order_status_id" Type="Int32" />
+          <Property Name="Payed" Type="Boolean" />
+          <Property Name="Sended" Type="Boolean" />
+          <Property Name="Order_date" Type="DateTime" Precision="0" />
+          <Property Name="Sended_date" Type="DateTime" Precision="0" />
+          <Property Name="Address_id" Type="Int32" />
+          <Property Name="User_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Products_to_order_id" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="Self.FK__Products___Addre__787EE5A0" FromRole="Products_order" ToRole="Address" />
+          <NavigationProperty Name="Order_status" Relationship="Self.FK__Products___Order__778AC167" FromRole="Products_order" ToRole="Order_status" />
+          <NavigationProperty Name="Products_to_order" Relationship="Self.FK__Products___Produ__02084FDA" FromRole="Products_order" ToRole="Products_to_order" />
+        </EntityType>
+        <EntityType Name="Products_to_order">
+          <Key>
+            <PropertyRef Name="id_Products_to_order" />
+          </Key>
+          <Property Name="id_Products_to_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Products_order_id" Type="Int32" Nullable="false" />
+          <Property Name="Product_id" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Products___Produ__01142BA1" FromRole="Products_to_order" ToRole="Product" />
+          <NavigationProperty Name="Products_order" Relationship="Self.FK__Products___Produ__02084FDA" FromRole="Products_to_order" ToRole="Products_order" />
+        </EntityType>
+        <Association Name="FK__Products___Addre__787EE5A0">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Avalibi__7D439ABD">
+          <End Role="Avalibility" Type="Self.Avalibility" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Avalibility">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Avalibility_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__7B5B524B">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Languag__7C4F7684">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Order__778AC167">
+          <End Role="Order_status" Type="Self.Order_status" Multiplicity="0..1" />
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Order_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Produce__7E37BEF6">
+          <End Role="Producent" Type="Self.Producent" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Producent_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Produ__01142BA1">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_to_order">
+              <PropertyRef Name="Product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Produ__02084FDA">
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="1" />
+          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products_order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_to_order">
+              <PropertyRef Name="Products_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShopDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Address" EntityType="Self.Address" />
+          <EntitySet Name="Avalibility" EntityType="Self.Avalibility" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Language" EntityType="Self.Language" />
+          <EntitySet Name="Order_status" EntityType="Self.Order_status" />
+          <EntitySet Name="Producent" EntityType="Self.Producent" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="Products_order" EntityType="Self.Products_order" />
+          <EntitySet Name="Products_to_order" EntityType="Self.Products_to_order" />
+          <AssociationSet Name="FK__Products___Addre__787EE5A0" Association="Self.FK__Products___Addre__787EE5A0">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Avalibi__7D439ABD" Association="Self.FK__Product__Avalibi__7D439ABD">
+            <End Role="Avalibility" EntitySet="Avalibility" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__7B5B524B" Association="Self.FK__Product__Categor__7B5B524B">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Languag__7C4F7684" Association="Self.FK__Product__Languag__7C4F7684">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Order__778AC167" Association="Self.FK__Products___Order__778AC167">
+            <End Role="Order_status" EntitySet="Order_status" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Produce__7E37BEF6" Association="Self.FK__Product__Produce__7E37BEF6">
+            <End Role="Producent" EntitySet="Producent" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Produ__01142BA1" Association="Self.FK__Products___Produ__01142BA1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Products_to_order" EntitySet="Products_to_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Produ__02084FDA" Association="Self.FK__Products___Produ__02084FDA">
+            <End Role="Products_order" EntitySet="Products_order" />
+            <End Role="Products_to_order" EntitySet="Products_to_order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShopDBModelStoreContainer" CdmEntityContainer="ShopDBEntities">
+          <EntitySetMapping Name="Address">
+            <EntityTypeMapping TypeName="ShopDBModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="House_number" ColumnName="House_number" />
+                <ScalarProperty Name="Flat_number" ColumnName="Flat_number" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Zip_code" ColumnName="Zip_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Avalibility">
+            <EntityTypeMapping TypeName="ShopDBModel.Avalibility">
+              <MappingFragment StoreEntitySet="Avalibility">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Avalibility1" ColumnName="Avalibility" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="ShopDBModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Category1" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Language">
+            <EntityTypeMapping TypeName="ShopDBModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Language_name" ColumnName="Language_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_status">
+            <EntityTypeMapping TypeName="ShopDBModel.Order_status">
+              <MappingFragment StoreEntitySet="Order_status">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Order_status1" ColumnName="Order_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producent">
+            <EntityTypeMapping TypeName="ShopDBModel.Producent">
+              <MappingFragment StoreEntitySet="Producent">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Producent_name" ColumnName="Producent_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="ShopDBModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Product_name" ColumnName="Product_name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Category_id" ColumnName="Category_id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Language_id" ColumnName="Language_id" />
+                <ScalarProperty Name="Avalibility_id" ColumnName="Avalibility_id" />
+                <ScalarProperty Name="Producent_id" ColumnName="Producent_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products_order">
+            <EntityTypeMapping TypeName="ShopDBModel.Products_order">
+              <MappingFragment StoreEntitySet="Products_order">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Total_price" ColumnName="Total_price" />
+                <ScalarProperty Name="Order_status_id" ColumnName="Order_status_id" />
+                <ScalarProperty Name="Payed" ColumnName="Payed" />
+                <ScalarProperty Name="Sended" ColumnName="Sended" />
+                <ScalarProperty Name="Order_date" ColumnName="Order_date" />
+                <ScalarProperty Name="Sended_date" ColumnName="Sended_date" />
+                <ScalarProperty Name="Address_id" ColumnName="Address_id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Products_to_order_id" ColumnName="Products_to_order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products_to_order">
+            <EntityTypeMapping TypeName="ShopDBModel.Products_to_order">
+              <MappingFragment StoreEntitySet="Products_to_order">
+                <ScalarProperty Name="id_Products_to_order" ColumnName="id_Products_to_order" />
+                <ScalarProperty Name="Products_order_id" ColumnName="Products_order_id" />
+                <ScalarProperty Name="Product_id" ColumnName="Product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
