@@ -1,18 +1,22 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<div class="jumbotron" style="background:url(../../Content/images/wrapperImg.jpg) no-repeat center center fixed; background-size:cover;">
+
     <h1>Game Shop</h1>
+    <p class="text-body">
+        Start shopping and find the best game for you in best price!
+    </p>
+    <p class="text-white">
+        @Html.ActionLink("Start Shopping", "Index", "MainShop", null, new { @class = "btn btn-warning" })
+    </p>
+    
+    <br /><br /><br />
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Administration panel</h2>
-        <p>
-           CRUD from database(temporary from this place)
-        </p>
-        @Html.ActionLink("Go to crud","Index","Crud",null,new { @class = "btn btn-primary" })
-    </div>
-    
-</div>
+
+
+
+

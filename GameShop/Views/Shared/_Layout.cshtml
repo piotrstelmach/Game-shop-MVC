@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,14 +24,17 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Go to crud", "Index", "Crud")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+    <div>
+        <div class="container">
+            @RenderBody()
+
+        </div>     <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Created by Piotr Stelmach</p>
         </footer>
@@ -40,5 +43,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#categoryMenu li").click(function () {
+            var categoryName = $(this).attr("value");
+            $("#products").load('@(Url.Action("GetProductByCategory","MainShop",null, Request.Url.Scheme))/?categoryName=' + categoryName);
+        });
+    });
+    </script>
 </body>
 </html>
