@@ -17,7 +17,7 @@ namespace GameShop.Controllers.CRUD
         // GET: Products_to_order
         public ActionResult Index()
         {
-            var products_to_order = db.Products_to_order.Include(p => p.Product).Include(p => p.Products_order);
+            var products_to_order = db.Products_to_order.Include(p => p.Product);
             return View(products_to_order.ToList());
         }
 
@@ -40,7 +40,6 @@ namespace GameShop.Controllers.CRUD
         public ActionResult Create()
         {
             ViewBag.Product_id = new SelectList(db.Product, "id", "Product_name");
-            ViewBag.Products_order_id = new SelectList(db.Products_order, "id", "User_id");
             return View();
         }
 
@@ -49,7 +48,7 @@ namespace GameShop.Controllers.CRUD
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_Products_to_order,Products_order_id,Product_id")] Products_to_order products_to_order)
+        public ActionResult Create([Bind(Include = "id_Products_to_order,Amount,Product_total_price,Product_id")] Products_to_order products_to_order)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +58,6 @@ namespace GameShop.Controllers.CRUD
             }
 
             ViewBag.Product_id = new SelectList(db.Product, "id", "Product_name", products_to_order.Product_id);
-            ViewBag.Products_order_id = new SelectList(db.Products_order, "id", "User_id", products_to_order.Products_order_id);
             return View(products_to_order);
         }
 
@@ -76,7 +74,6 @@ namespace GameShop.Controllers.CRUD
                 return HttpNotFound();
             }
             ViewBag.Product_id = new SelectList(db.Product, "id", "Product_name", products_to_order.Product_id);
-            ViewBag.Products_order_id = new SelectList(db.Products_order, "id", "User_id", products_to_order.Products_order_id);
             return View(products_to_order);
         }
 
@@ -85,7 +82,7 @@ namespace GameShop.Controllers.CRUD
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id_Products_to_order,Products_order_id,Product_id")] Products_to_order products_to_order)
+        public ActionResult Edit([Bind(Include = "id_Products_to_order,Amount,Product_total_price,Product_id")] Products_to_order products_to_order)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +91,6 @@ namespace GameShop.Controllers.CRUD
                 return RedirectToAction("Index");
             }
             ViewBag.Product_id = new SelectList(db.Product, "id", "Product_name", products_to_order.Product_id);
-            ViewBag.Products_order_id = new SelectList(db.Products_order, "id", "User_id", products_to_order.Products_order_id);
             return View(products_to_order);
         }
 

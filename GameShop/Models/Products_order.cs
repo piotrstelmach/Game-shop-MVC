@@ -14,27 +14,22 @@ namespace GameShop.Models
     
     public partial class Products_order
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Products_order()
-        {
-            this.Products_to_order = new HashSet<Products_to_order>();
-        }
-    
         public int id { get; set; }
-        public Nullable<int> Amount { get; set; }
-        public Nullable<decimal> Total_price { get; set; }
         public Nullable<int> Order_status_id { get; set; }
         public Nullable<bool> Payed { get; set; }
         public Nullable<bool> Sended { get; set; }
         public Nullable<System.DateTime> Order_date { get; set; }
         public Nullable<System.DateTime> Sended_date { get; set; }
         public Nullable<int> Address_id { get; set; }
+        public string First_Name { get; set; }
+        public string Last_Name { get; set; }
         public string User_id { get; set; }
         public Nullable<int> Products_to_order_id { get; set; }
+        public decimal Total_price { get; set; }
     
         public virtual Address Address { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Order_status Order_status { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Products_to_order> Products_to_order { get; set; }
+        public virtual Products_to_order Products_to_order { get; set; }
     }
 }

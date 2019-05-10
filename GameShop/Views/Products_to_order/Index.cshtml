@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<GameShop.Models.Products_to_order>
 
 @{
-    ViewBag.Title = "Products to order";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Products to order</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,10 +13,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Product.Product_name)
+            @Html.DisplayNameFor(model => model.Amount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Products_order.User_id)
+            @Html.DisplayNameFor(model => model.Product_total_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product.Product_name)
         </th>
         <th></th>
     </tr>
@@ -23,10 +27,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Product.Product_name)
+            @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Products_order.User_id)
+            @Html.DisplayFor(modelItem => item.Product_total_price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Product_name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id_Products_to_order }) |

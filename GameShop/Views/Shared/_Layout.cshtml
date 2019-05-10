@@ -6,20 +6,19 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-dark bg-info navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarMarkup">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 @Html.ActionLink("Game Shop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" id="navbarMarkup">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
@@ -31,10 +30,10 @@
         </div>
     </div>
     <div>
-        <div class="container">
+
             @RenderBody()
 
-        </div>     <hr />
+    <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Created by Piotr Stelmach</p>
         </footer>
@@ -50,6 +49,24 @@
             var categoryName = $(this).attr("value");
             $("#products").load('@(Url.Action("GetProductByCategory","MainShop",null, Request.Url.Scheme))/?categoryName=' + categoryName);
         });
+
+        //$(".RemoveLink").click(function () {
+            
+        //    var recordToDelete = $(this).attr("data-id");
+        //    if (recordToDelete != '') {
+        //        // Perform the ajax post
+        //        $.post("/BuyProducts/RemoveProductFromCart/"+recordToDelete,
+        //            function (data) {
+        //                if (data.ItemCount == 0) {
+        //                    $('#row-' + data.DeleteId).fadeOut('slow');
+        //                } else {
+        //                    $('#item-count-' + data.DeleteId).text(data.ItemCount);
+        //                }
+        //                //$('#cart-total').text(data.CartTotal);
+        //                //$('#update-message').text(data.Message);
+        //                //$('#cart-status').text('Cart (' + data.CartCount + ')');
+        //            });
+        }
     });
     </script>
 </body>

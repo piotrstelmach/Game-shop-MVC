@@ -12,22 +12,18 @@ namespace GameShop.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Products_to_order
+    public partial class AspNetRoles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Products_to_order()
+        public AspNetRoles()
         {
-            this.Products_order = new HashSet<Products_order>();
+            this.AspNetUsers = new HashSet<AspNetUsers>();
         }
     
-        public int id_Products_to_order { get; set; }
-        public int Amount { get; set; }
-        public decimal Product_total_price { get; set; }
-        public Nullable<int> Product_id { get; set; }
-        public string Cart_Id { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual Product Product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Products_order> Products_order { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

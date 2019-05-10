@@ -24,7 +24,7 @@ namespace GameShop.Models
         public string Product_name { get; set; }
         public string Description { get; set; }
         public Nullable<int> Category_id { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal Price { get; set; }
         public Nullable<int> Language_id { get; set; }
         public Nullable<int> Avalibility_id { get; set; }
         public Nullable<int> Producent_id { get; set; }

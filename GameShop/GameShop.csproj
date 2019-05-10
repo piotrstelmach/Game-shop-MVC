@@ -178,6 +178,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BuyProductsController.cs" />
     <Compile Include="Controllers\CRUD\AvalibilitiesController.cs" />
     <Compile Include="Controllers\CRUD\CategoriesController.cs" />
     <Compile Include="Controllers\CRUD\CrudController.cs" />
@@ -185,11 +186,11 @@
     <Compile Include="Controllers\CRUD\Order_statusController.cs" />
     <Compile Include="Controllers\CRUD\ProducentsController.cs" />
     <Compile Include="Controllers\CRUD\ProductsController.cs" />
-    <Compile Include="Controllers\CRUD\Products_orderController.cs" />
-    <Compile Include="Controllers\CRUD\Products_to_orderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainShopController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\CRUD\Products_orderController.cs" />
+    <Compile Include="Controllers\CRUD\Products_to_orderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,6 +200,18 @@
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\CRUD\AddressesController.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaims.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogins.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>ShopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Avalibility.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
@@ -226,6 +239,7 @@
     <Compile Include="Models\Products_to_order.cs">
       <DependentUpon>ShopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ShopCartViewModel.cs" />
     <Compile Include="Models\ShopModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +256,7 @@
       <DependentUpon>ShopModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShoppingCart\ShopCart.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -383,16 +398,6 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-    <Content Include="Views\Products_order\Create.cshtml" />
-    <Content Include="Views\Products_order\Delete.cshtml" />
-    <Content Include="Views\Products_order\Details.cshtml" />
-    <Content Include="Views\Products_order\Edit.cshtml" />
-    <Content Include="Views\Products_order\Index.cshtml" />
-    <Content Include="Views\Products_to_order\Create.cshtml" />
-    <Content Include="Views\Products_to_order\Delete.cshtml" />
-    <Content Include="Views\Products_to_order\Details.cshtml" />
-    <Content Include="Views\Products_to_order\Edit.cshtml" />
-    <Content Include="Views\Products_to_order\Index.cshtml" />
     <Content Include="Views\Crud\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -405,6 +410,17 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\MainShop\Index.cshtml" />
     <Content Include="Views\MainShop\Product_partial.cshtml" />
+    <Content Include="Views\Products_to_order\Create.cshtml" />
+    <Content Include="Views\Products_to_order\Delete.cshtml" />
+    <Content Include="Views\Products_to_order\Details.cshtml" />
+    <Content Include="Views\Products_to_order\Edit.cshtml" />
+    <Content Include="Views\Products_to_order\Index.cshtml" />
+    <Content Include="Views\Products_order\Create.cshtml" />
+    <Content Include="Views\Products_order\Delete.cshtml" />
+    <Content Include="Views\Products_order\Details.cshtml" />
+    <Content Include="Views\Products_order\Edit.cshtml" />
+    <Content Include="Views\Products_order\Index.cshtml" />
+    <Content Include="Views\BuyProducts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

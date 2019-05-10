@@ -32,6 +32,10 @@ namespace GameShop.Models
         public virtual DbSet<Order_status> Order_status { get; set; }
         public virtual DbSet<Producent> Producent { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Products_order> Products_order { get; set; }
         public virtual DbSet<Products_to_order> Products_to_order { get; set; }
     }

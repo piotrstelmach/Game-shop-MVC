@@ -12,17 +12,25 @@
         <EntityTypeShape EntityType="ShopDBModel.Order_status" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ShopDBModel.Producent" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ShopDBModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopDBModel.Products_order" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShopDBModel.Products_to_order" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
-        <AssociationConnector Association="ShopDBModel.FK__Products___Addre__787EE5A0" ManuallyRouted="false" />
         <AssociationConnector Association="ShopDBModel.FK__Product__Avalibi__7D439ABD" ManuallyRouted="false" />
         <AssociationConnector Association="ShopDBModel.FK__Product__Categor__7B5B524B" ManuallyRouted="false" />
         <AssociationConnector Association="ShopDBModel.FK__Product__Languag__7C4F7684" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopDBModel.FK__Products___Order__778AC167" ManuallyRouted="false" />
         <AssociationConnector Association="ShopDBModel.FK__Product__Produce__7E37BEF6" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopDBModel.FK__Products___Produ__01142BA1" ManuallyRouted="false" />
-        <AssociationConnector Association="ShopDBModel.FK__Products___Produ__02084FDA" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="ShopDBModel.AspNetRoles" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="ShopDBModel.AspNetUserClaims" Width="1.5" PointX="7.5" PointY="12.625" />
+        <EntityTypeShape EntityType="ShopDBModel.AspNetUserLogins" Width="1.5" PointX="7.5" PointY="4.125" />
+        <EntityTypeShape EntityType="ShopDBModel.AspNetUsers" Width="1.5" PointX="5.25" PointY="7.25" />
+        <EntityTypeShape EntityType="ShopDBModel.Products_order" Width="1.5" PointX="7.5" PointY="7.25" />
+        <EntityTypeShape EntityType="ShopDBModel.Products_to_order" Width="1.5" PointX="5.25" PointY="1.625" />
+        <AssociationConnector Association="ShopDBModel.FK__Products___Addre__282DF8C2" />
+        <AssociationConnector Association="ShopDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ShopDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ShopDBModel.FK__Products___User___2A164134" />
+        <AssociationConnector Association="ShopDBModel.FK__Products___Order__2739D489" />
+        <AssociationConnector Association="ShopDBModel.FK__Products___Produ__2B0A656D" />
+        <AssociationConnector Association="ShopDBModel.FK__Products___Produ__29221CFB" />
+        <AssociationConnector Association="ShopDBModel.AspNetUserRoles" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

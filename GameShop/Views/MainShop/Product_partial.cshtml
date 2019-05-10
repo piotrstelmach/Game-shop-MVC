@@ -21,8 +21,8 @@
                                 </p>
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <a class="btn btn-success">Buy</a>
-                                <a class="btn btn-primary">Details</a>
+                                @Html.ActionLink("Add to cart","AddProductToCart","BuyProducts", new { id = product.id }, new { @class = "btn btn-success" })
+                                @Html.ActionLink("Details","ProductDetail", "MainShop", new { id = product.id }, new { @class = "btn btn-primary" })
                             </div>
                         </div>
                     </div>

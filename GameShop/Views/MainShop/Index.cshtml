@@ -6,31 +6,35 @@
 
 
 
-<nav class="col-md-2 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
-        <ul id="categoryMenu" class="nav flex-column">
-            <li value="All" class="nav-item">
-                @Html.ActionLink("All Products", "Index", "MainShop");
-            </li>
+    <br />
+    <div class="container">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar p-2">
+            <div class="sidebar-sticky">
+                <ul id="categoryMenu" class="nav flex-column">
+                    <li value="All" class="nav-item">
+                        @Html.ActionLink("All Products", "Index", "MainShop")
+                    </li>
 
-            @foreach (var category in Model.Categories)
-            {
-                <li value=@category.Category1 class="nav-item">
-                    <a class="nav-link" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                        @category.Category1
-                    </a>
-                </li>
-            }
-        </ul>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li value=@category.Category1 class="nav-item">
+                            <a class="nav-link" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                @category.Category1
+                            </a>
+                        </li>
+                    }
+                </ul>
 
+            </div>
+        </nav>
+
+        <div class="container">
+
+            @{ Html.RenderPartial("Product_partial", Model);}
+
+        </div>
     </div>
-</nav>
-
-<div class="container">
-    @{ Html.RenderPartial("Product_partial", Model);}
-
-</div>
 
 
 

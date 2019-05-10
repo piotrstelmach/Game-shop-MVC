@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShopDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ShopDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="id" />
@@ -15,6 +15,57 @@
           <Property Name="Flat_number" Type="int" />
           <Property Name="Country" Type="varchar" MaxLength="40" />
           <Property Name="Zip_code" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Avalibility">
           <Key>
@@ -56,10 +107,10 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Product_name" Type="varchar" MaxLength="40" />
+          <Property Name="Product_name" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Description" Type="text" />
           <Property Name="Category_id" Type="int" />
-          <Property Name="Price" Type="money" />
+          <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="Language_id" Type="int" />
           <Property Name="Avalibility_id" Type="int" />
           <Property Name="Producent_id" Type="int" />
@@ -69,24 +120,27 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Amount" Type="int" />
-          <Property Name="Total_price" Type="money" />
           <Property Name="Order_status_id" Type="int" />
           <Property Name="Payed" Type="bit" />
           <Property Name="Sended" Type="bit" />
           <Property Name="Order_date" Type="date" />
           <Property Name="Sended_date" Type="date" />
           <Property Name="Address_id" Type="int" />
+          <Property Name="First_Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="User_id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Products_to_order_id" Type="int" />
+          <Property Name="Total_price" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Products_to_order">
           <Key>
             <PropertyRef Name="id_Products_to_order" />
           </Key>
           <Property Name="id_Products_to_order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Products_order_id" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Product_total_price" Type="money" Nullable="false" />
           <Property Name="Product_id" Type="int" />
+          <Property Name="Cart_Id" Type="varchar" MaxLength="128" />
         </EntityType>
         <Association Name="FK__Product__Avalibi__7D439ABD">
           <End Role="Avalibility" Type="Self.Avalibility" Multiplicity="0..1" />
@@ -136,7 +190,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products___Addre__787EE5A0">
+        <Association Name="FK__Products___Addre__282DF8C2">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
           <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -148,7 +202,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products___Order__778AC167">
+        <Association Name="FK__Products___Order__2739D489">
           <End Role="Order_status" Type="Self.Order_status" Multiplicity="0..1" />
           <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -160,7 +214,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products___Produ__01142BA1">
+        <Association Name="FK__Products___Produ__29221CFB">
+          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="0..1" />
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products_to_order">
+              <PropertyRef Name="id_Products_to_order" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Products_to_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Produ__2EDAF651">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -172,20 +238,81 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products___Produ__02084FDA">
-          <End Role="Products_order" Type="Self.Products_order" Multiplicity="1" />
-          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
+        <Association Name="FK__Products___User___2A164134">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Products_order">
-              <PropertyRef Name="id" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Products_to_order">
-              <PropertyRef Name="Products_order_id" />
+            <Dependent Role="Products_order">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ShopDBModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Avalibility" EntityType="Self.Avalibility" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
@@ -210,25 +337,44 @@
             <End Role="Producent" EntitySet="Producent" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products___Addre__787EE5A0" Association="Self.FK__Products___Addre__787EE5A0">
+          <AssociationSet Name="FK__Products___Addre__282DF8C2" Association="Self.FK__Products___Addre__282DF8C2">
             <End Role="Address" EntitySet="Address" />
             <End Role="Products_order" EntitySet="Products_order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products___Order__778AC167" Association="Self.FK__Products___Order__778AC167">
+          <AssociationSet Name="FK__Products___Order__2739D489" Association="Self.FK__Products___Order__2739D489">
             <End Role="Order_status" EntitySet="Order_status" />
             <End Role="Products_order" EntitySet="Products_order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products___Produ__01142BA1" Association="Self.FK__Products___Produ__01142BA1">
+          <AssociationSet Name="FK__Products___Produ__29221CFB" Association="Self.FK__Products___Produ__29221CFB">
+            <End Role="Products_to_order" EntitySet="Products_to_order" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Produ__2EDAF651" Association="Self.FK__Products___Produ__2EDAF651">
             <End Role="Product" EntitySet="Product" />
             <End Role="Products_to_order" EntitySet="Products_to_order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products___Produ__02084FDA" Association="Self.FK__Products___Produ__02084FDA">
+          <AssociationSet Name="FK__Products___User___2A164134" Association="Self.FK__Products___User___2A164134">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Products_order" EntitySet="Products_order" />
-            <End Role="Products_to_order" EntitySet="Products_to_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -242,7 +388,7 @@
           <Property Name="Flat_number" Type="Int32" />
           <Property Name="Country" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Zip_code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Products_order" Relationship="Self.FK__Products___Addre__787EE5A0" FromRole="Address" ToRole="Products_order" />
+          <NavigationProperty Name="Products_order" Relationship="ShopDBModel.FK__Products___Addre__282DF8C2" FromRole="Address" ToRole="Products_order" />
         </EntityType>
         <EntityType Name="Avalibility">
           <Key>
@@ -274,7 +420,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Order_status1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Products_order" Relationship="Self.FK__Products___Order__778AC167" FromRole="Order_status" ToRole="Products_order" />
+          <NavigationProperty Name="Products_order" Relationship="ShopDBModel.FK__Products___Order__2739D489" FromRole="Order_status" ToRole="Products_order" />
         </EntityType>
         <EntityType Name="Producent">
           <Key>
@@ -289,10 +435,10 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Product_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Product_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Category_id" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Language_id" Type="Int32" />
           <Property Name="Avalibility_id" Type="Int32" />
           <Property Name="Producent_id" Type="Int32" />
@@ -300,49 +446,8 @@
           <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__7B5B524B" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Product__Languag__7C4F7684" FromRole="Product" ToRole="Language" />
           <NavigationProperty Name="Producent" Relationship="Self.FK__Product__Produce__7E37BEF6" FromRole="Product" ToRole="Producent" />
-          <NavigationProperty Name="Products_to_order" Relationship="Self.FK__Products___Produ__01142BA1" FromRole="Product" ToRole="Products_to_order" />
+          <NavigationProperty Name="Products_to_order" Relationship="ShopDBModel.FK__Products___Produ__2B0A656D" FromRole="Product" ToRole="Products_to_order" />
         </EntityType>
-        <EntityType Name="Products_order">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Amount" Type="Int32" />
-          <Property Name="Total_price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Order_status_id" Type="Int32" />
-          <Property Name="Payed" Type="Boolean" />
-          <Property Name="Sended" Type="Boolean" />
-          <Property Name="Order_date" Type="DateTime" Precision="0" />
-          <Property Name="Sended_date" Type="DateTime" Precision="0" />
-          <Property Name="Address_id" Type="Int32" />
-          <Property Name="User_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Products_to_order_id" Type="Int32" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Products___Addre__787EE5A0" FromRole="Products_order" ToRole="Address" />
-          <NavigationProperty Name="Order_status" Relationship="Self.FK__Products___Order__778AC167" FromRole="Products_order" ToRole="Order_status" />
-          <NavigationProperty Name="Products_to_order" Relationship="Self.FK__Products___Produ__02084FDA" FromRole="Products_order" ToRole="Products_to_order" />
-        </EntityType>
-        <EntityType Name="Products_to_order">
-          <Key>
-            <PropertyRef Name="id_Products_to_order" />
-          </Key>
-          <Property Name="id_Products_to_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Products_order_id" Type="Int32" Nullable="false" />
-          <Property Name="Product_id" Type="Int32" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Products___Produ__01142BA1" FromRole="Products_to_order" ToRole="Product" />
-          <NavigationProperty Name="Products_order" Relationship="Self.FK__Products___Produ__02084FDA" FromRole="Products_to_order" ToRole="Products_order" />
-        </EntityType>
-        <Association Name="FK__Products___Addre__787EE5A0">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
-          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Products_order">
-              <PropertyRef Name="Address_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Product__Avalibi__7D439ABD">
           <End Role="Avalibility" Type="Self.Avalibility" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -379,18 +484,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products___Order__778AC167">
-          <End Role="Order_status" Type="Self.Order_status" Multiplicity="0..1" />
-          <End Role="Products_order" Type="Self.Products_order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order_status">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Products_order">
-              <PropertyRef Name="Order_status_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Product__Produce__7E37BEF6">
           <End Role="Producent" Type="Self.Producent" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -403,30 +496,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products___Produ__01142BA1">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Products_to_order">
-              <PropertyRef Name="Product_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Products___Produ__02084FDA">
-          <End Role="Products_order" Type="Self.Products_order" Multiplicity="1" />
-          <End Role="Products_to_order" Type="Self.Products_to_order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products_order">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Products_to_order">
-              <PropertyRef Name="Products_order_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ShopDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Address" EntityType="Self.Address" />
           <EntitySet Name="Avalibility" EntityType="Self.Avalibility" />
@@ -435,12 +504,6 @@
           <EntitySet Name="Order_status" EntityType="Self.Order_status" />
           <EntitySet Name="Producent" EntityType="Self.Producent" />
           <EntitySet Name="Product" EntityType="Self.Product" />
-          <EntitySet Name="Products_order" EntityType="Self.Products_order" />
-          <EntitySet Name="Products_to_order" EntityType="Self.Products_to_order" />
-          <AssociationSet Name="FK__Products___Addre__787EE5A0" Association="Self.FK__Products___Addre__787EE5A0">
-            <End Role="Address" EntitySet="Address" />
-            <End Role="Products_order" EntitySet="Products_order" />
-          </AssociationSet>
           <AssociationSet Name="FK__Product__Avalibi__7D439ABD" Association="Self.FK__Product__Avalibi__7D439ABD">
             <End Role="Avalibility" EntitySet="Avalibility" />
             <End Role="Product" EntitySet="Product" />
@@ -453,23 +516,224 @@
             <End Role="Language" EntitySet="Language" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products___Order__778AC167" Association="Self.FK__Products___Order__778AC167">
-            <End Role="Order_status" EntitySet="Order_status" />
-            <End Role="Products_order" EntitySet="Products_order" />
-          </AssociationSet>
           <AssociationSet Name="FK__Product__Produce__7E37BEF6" Association="Self.FK__Product__Produce__7E37BEF6">
             <End Role="Producent" EntitySet="Producent" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products___Produ__01142BA1" Association="Self.FK__Products___Produ__01142BA1">
+          <EntitySet Name="AspNetRoles" EntityType="ShopDBModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="ShopDBModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="ShopDBModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="ShopDBModel.AspNetUsers" />
+          <EntitySet Name="Products_order" EntityType="ShopDBModel.Products_order" />
+          <EntitySet Name="Products_to_order" EntityType="ShopDBModel.Products_to_order" />
+          <AssociationSet Name="FK__Products___Addre__282DF8C2" Association="ShopDBModel.FK__Products___Addre__282DF8C2">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ShopDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ShopDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___User___2A164134" Association="ShopDBModel.FK__Products___User___2A164134">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Order__2739D489" Association="ShopDBModel.FK__Products___Order__2739D489">
+            <End Role="Order_status" EntitySet="Order_status" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products___Produ__2B0A656D" Association="ShopDBModel.FK__Products___Produ__2B0A656D">
             <End Role="Product" EntitySet="Product" />
             <End Role="Products_to_order" EntitySet="Products_to_order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products___Produ__02084FDA" Association="Self.FK__Products___Produ__02084FDA">
-            <End Role="Products_order" EntitySet="Products_order" />
+          <AssociationSet Name="FK__Products___Produ__29221CFB" Association="ShopDBModel.FK__Products___Produ__29221CFB">
             <End Role="Products_to_order" EntitySet="Products_to_order" />
+            <End Role="Products_order" EntitySet="Products_order" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="ShopDBModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ShopDBModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ShopDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ShopDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="ShopDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="ShopDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Products_order" Relationship="ShopDBModel.FK__Products___User___2A164134" FromRole="AspNetUsers" ToRole="Products_order" />
+          <NavigationProperty Name="AspNetRoles" Relationship="ShopDBModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="Products_order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order_status_id" Type="Int32" />
+          <Property Name="Payed" Type="Boolean" />
+          <Property Name="Sended" Type="Boolean" />
+          <Property Name="Order_date" Type="DateTime" Precision="0" />
+          <Property Name="Sended_date" Type="DateTime" Precision="0" />
+          <Property Name="Address_id" Type="Int32" />
+          <Property Name="First_Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="User_id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Products_to_order_id" Type="Int32" />
+          <Property Name="Total_price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Address" Relationship="ShopDBModel.FK__Products___Addre__282DF8C2" FromRole="Products_order" ToRole="Address" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ShopDBModel.FK__Products___User___2A164134" FromRole="Products_order" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Order_status" Relationship="ShopDBModel.FK__Products___Order__2739D489" FromRole="Products_order" ToRole="Order_status" />
+          <NavigationProperty Name="Products_to_order" Relationship="ShopDBModel.FK__Products___Produ__29221CFB" FromRole="Products_order" ToRole="Products_to_order" />
+        </EntityType>
+        <EntityType Name="Products_to_order">
+          <Key>
+            <PropertyRef Name="id_Products_to_order" />
+          </Key>
+          <Property Name="id_Products_to_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Product_total_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Product_id" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="ShopDBModel.FK__Products___Produ__2B0A656D" FromRole="Products_to_order" ToRole="Product" />
+          <NavigationProperty Name="Products_order" Relationship="ShopDBModel.FK__Products___Produ__29221CFB" FromRole="Products_to_order" ToRole="Products_order" />
+          <Property Name="Cart_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Products___Addre__282DF8C2">
+          <End Type="ShopDBModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="ShopDBModel.Products_order" Role="Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Address_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="ShopDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShopDBModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="ShopDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ShopDBModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___User___2A164134">
+          <End Type="ShopDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="ShopDBModel.Products_order" Role="Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Order__2739D489">
+          <End Type="ShopDBModel.Order_status" Role="Order_status" Multiplicity="0..1" />
+          <End Type="ShopDBModel.Products_order" Role="Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Order_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Produ__2B0A656D">
+          <End Type="ShopDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ShopDBModel.Products_to_order" Role="Products_to_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products_to_order">
+              <PropertyRef Name="Product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products___Produ__29221CFB">
+          <End Type="ShopDBModel.Products_to_order" Role="Products_to_order" Multiplicity="0..1" />
+          <End Type="ShopDBModel.Products_order" Role="Products_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products_to_order">
+              <PropertyRef Name="id_Products_to_order" />
+            </Principal>
+            <Dependent Role="Products_order">
+              <PropertyRef Name="Products_to_order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="ShopDBModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="ShopDBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -542,32 +806,88 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="ShopDBModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="ShopDBModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="ShopDBModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="ShopDBModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products_order">
             <EntityTypeMapping TypeName="ShopDBModel.Products_order">
               <MappingFragment StoreEntitySet="Products_order">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Total_price" ColumnName="Total_price" />
-                <ScalarProperty Name="Order_status_id" ColumnName="Order_status_id" />
-                <ScalarProperty Name="Payed" ColumnName="Payed" />
-                <ScalarProperty Name="Sended" ColumnName="Sended" />
-                <ScalarProperty Name="Order_date" ColumnName="Order_date" />
-                <ScalarProperty Name="Sended_date" ColumnName="Sended_date" />
-                <ScalarProperty Name="Address_id" ColumnName="Address_id" />
-                <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="Products_to_order_id" ColumnName="Products_to_order_id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Address_id" ColumnName="Address_id" />
+                <ScalarProperty Name="Sended_date" ColumnName="Sended_date" />
+                <ScalarProperty Name="Order_date" ColumnName="Order_date" />
+                <ScalarProperty Name="Sended" ColumnName="Sended" />
+                <ScalarProperty Name="Payed" ColumnName="Payed" />
+                <ScalarProperty Name="Order_status_id" ColumnName="Order_status_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products_to_order">
             <EntityTypeMapping TypeName="ShopDBModel.Products_to_order">
               <MappingFragment StoreEntitySet="Products_to_order">
-                <ScalarProperty Name="id_Products_to_order" ColumnName="id_Products_to_order" />
-                <ScalarProperty Name="Products_order_id" ColumnName="Products_order_id" />
+                <ScalarProperty Name="Cart_Id" ColumnName="Cart_Id" />
                 <ScalarProperty Name="Product_id" ColumnName="Product_id" />
+                <ScalarProperty Name="Product_total_price" ColumnName="Product_total_price" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="id_Products_to_order" ColumnName="id_Products_to_order" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ShopDBModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

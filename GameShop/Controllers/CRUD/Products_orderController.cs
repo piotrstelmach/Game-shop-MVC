@@ -17,7 +17,7 @@ namespace GameShop.Controllers.CRUD
         // GET: Products_order
         public ActionResult Index()
         {
-            var products_order = db.Products_order.Include(p => p.Address).Include(p => p.Order_status);
+            var products_order = db.Products_order.Include(p => p.Address).Include(p => p.AspNetUsers).Include(p => p.Order_status).Include(p => p.Products_to_order);
             return View(products_order.ToList());
         }
 
@@ -40,7 +40,9 @@ namespace GameShop.Controllers.CRUD
         public ActionResult Create()
         {
             ViewBag.Address_id = new SelectList(db.Address, "id", "Street");
+            ViewBag.User_id = new SelectList(db.AspNetUsers, "Id", "Email");
             ViewBag.Order_status_id = new SelectList(db.Order_status, "id", "Order_status1");
+            ViewBag.Products_to_order_id = new SelectList(db.Products_to_order, "id_Products_to_order", "id_Products_to_order");
             return View();
         }
 
@@ -49,7 +51,7 @@ namespace GameShop.Controllers.CRUD
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Amount,Total_price,Order_status_id,Payed,Sended,Order_date,Sended_date,Address_id,User_id,Products_to_order_id")] Products_order products_order)
+        public ActionResult Create([Bind(Include = "id,Order_status_id,Payed,Sended,Order_date,Sended_date,Address_id,First_Name,Last_Name,User_id,Products_to_order_id,Total_price")] Products_order products_order)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +61,9 @@ namespace GameShop.Controllers.CRUD
             }
 
             ViewBag.Address_id = new SelectList(db.Address, "id", "Street", products_order.Address_id);
+            ViewBag.User_id = new SelectList(db.AspNetUsers, "Id", "Email", products_order.User_id);
             ViewBag.Order_status_id = new SelectList(db.Order_status, "id", "Order_status1", products_order.Order_status_id);
+            ViewBag.Products_to_order_id = new SelectList(db.Products_to_order, "id_Products_to_order", "id_Products_to_order", products_order.Products_to_order_id);
             return View(products_order);
         }
 
@@ -76,7 +80,9 @@ namespace GameShop.Controllers.CRUD
                 return HttpNotFound();
             }
             ViewBag.Address_id = new SelectList(db.Address, "id", "Street", products_order.Address_id);
+            ViewBag.User_id = new SelectList(db.AspNetUsers, "Id", "Email", products_order.User_id);
             ViewBag.Order_status_id = new SelectList(db.Order_status, "id", "Order_status1", products_order.Order_status_id);
+            ViewBag.Products_to_order_id = new SelectList(db.Products_to_order, "id_Products_to_order", "id_Products_to_order", products_order.Products_to_order_id);
             return View(products_order);
         }
 
@@ -85,7 +91,7 @@ namespace GameShop.Controllers.CRUD
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Amount,Total_price,Order_status_id,Payed,Sended,Order_date,Sended_date,Address_id,User_id,Products_to_order_id")] Products_order products_order)
+        public ActionResult Edit([Bind(Include = "id,Order_status_id,Payed,Sended,Order_date,Sended_date,Address_id,First_Name,Last_Name,User_id,Products_to_order_id,Total_price")] Products_order products_order)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +100,9 @@ namespace GameShop.Controllers.CRUD
                 return RedirectToAction("Index");
             }
             ViewBag.Address_id = new SelectList(db.Address, "id", "Street", products_order.Address_id);
+            ViewBag.User_id = new SelectList(db.AspNetUsers, "Id", "Email", products_order.User_id);
             ViewBag.Order_status_id = new SelectList(db.Order_status, "id", "Order_status1", products_order.Order_status_id);
+            ViewBag.Products_to_order_id = new SelectList(db.Products_to_order, "id_Products_to_order", "id_Products_to_order", products_order.Products_to_order_id);
             return View(products_order);
         }
 

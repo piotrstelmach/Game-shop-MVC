@@ -1,0 +1,40 @@
+﻿@model GameShop.Models.ShopCartViewModel
+@{
+    ViewBag.Title = "Your Basket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Basket details</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int count = 1;
+           foreach (var product in Model.Products)
+        {
+
+        <tr id="row-@count">
+            <td>@(count++)</td>
+            <td>@Html.DisplayFor(modelItem => product.Product.Product_name)</td>
+            <td>
+                <a href=@Url.Action("RemoveProductFromCart","BuyProducts",new { id=product.Product.id})>
+                    <i class='far fa-minus-square fa-3x'></i>
+                </a> 
+                            @Html.TextBoxFor(modelItem => product.Amount, new { @class = "form-control col-xs-2" })
+                <a href=@Url.Action("AddProductToCart","BuyProducts",new { id=product.Product.id})>
+                    <i class='far fa-plus-square fa-3x'></i>
+                </a>
+            </td>
+            <td>@Html.DisplayFor(modelItem => product.Product_total_price)</td>
+        </tr>
+        }
+            }
+    </tbody>
+</table>
+
