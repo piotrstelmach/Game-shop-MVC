@@ -13,6 +13,7 @@ namespace GameShop.Controllers
     {
         private ShopDBEntities db;
         MainShopViewModel mainShopViewModel;
+        ProductDetailViewModel productDetailViewModel;
         // GET: MainShop
         public ActionResult Index()
         {
@@ -34,6 +35,19 @@ namespace GameShop.Controllers
             mainShopViewModel.Products = new List<Product>();
             mainShopViewModel.Products = productList;
             return PartialView("Product_partial", mainShopViewModel);
+        }
+
+        public ActionResult ProductDetail(int id)
+        {
+            db = new ShopDBEntities();
+            var product = db.Product.Where(c => c.id == id);
+            var categories = db.Category.ToList();
+            productDetailViewModel = new ProductDetailViewModel
+            {
+                Product =product.ToList(),
+                Categories = categories
+            };
+            return View(productDetailViewModel);
         }
     }
 }

@@ -19,7 +19,8 @@ namespace GameShop.Controllers
 
             var shopCartViewModel = new ShopCartViewModel
             {
-                Products = cart.getCartProducts()
+                Products = cart.getCartProducts(),
+                cartId = cart.CartId
         };
             return View(shopCartViewModel);
         }

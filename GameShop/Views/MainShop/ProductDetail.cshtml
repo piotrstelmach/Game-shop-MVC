@@ -1,0 +1,43 @@
+﻿@model GameShop.Models.ProductDetailViewModel
+@{
+    ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="product" class="container">
+    @foreach (var product in Model.Product)
+    {
+        <div class="item col-lg-4 col-md-6 mb-4">
+            <div class="card ">
+                <img class="card-img-top" src="https://via.placeholder.com/150" alt="" />
+                <div class="card-body">
+                    <h4 class="card-title">
+                        @Html.DisplayFor(modelItem => product.Product_name)
+                    </h4>
+                    <p>
+                        @Html.DisplayFor(modelItem => product.Avalibility.Avalibility1)
+                    </p>
+                    <p>
+                        @Html.DisplayFor(modelItem => product.Description)
+
+                    </p>
+                    <div class="card-text">
+                        <h5>
+                            @Html.DisplayFor(modelItem => product.Price) PLN
+                        </h5>
+                    </div>
+                    <div class="card-footer">
+                        @Html.ActionLink("Buy", "AddProductToCart", "BuyProducts", new { id = product.id }, new { @class = "btn btn-success" })
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+

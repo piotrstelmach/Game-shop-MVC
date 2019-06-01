@@ -4,37 +4,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Basket details</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>Product</th>
-            <th>Amount</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{int count = 1;
-           foreach (var product in Model.Products)
-        {
+<div class="container">
+    <h2>Basket details</h2>
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Product</th>
+                <th class="col-xs-1">Amount</th>
+                <th>Add/Remove</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int count = 1;
+                decimal totalPrice = 0.00m;
+                foreach (var product in Model.Products)
+                {
 
-        <tr id="row-@count">
-            <td>@(count++)</td>
-            <td>@Html.DisplayFor(modelItem => product.Product.Product_name)</td>
-            <td>
-                <a href=@Url.Action("RemoveProductFromCart","BuyProducts",new { id=product.Product.id})>
-                    <i class='far fa-minus-square fa-3x'></i>
-                </a> 
-                            @Html.TextBoxFor(modelItem => product.Amount, new { @class = "form-control col-xs-2" })
-                <a href=@Url.Action("AddProductToCart","BuyProducts",new { id=product.Product.id})>
-                    <i class='far fa-plus-square fa-3x'></i>
-                </a>
-            </td>
-            <td>@Html.DisplayFor(modelItem => product.Product_total_price)</td>
-        </tr>
-        }
+                    <tr id="row-@count">
+                        <td>@(count++)</td>
+                        <td>@Html.DisplayFor(modelItem => product.Product.Product_name)</td>
+                        <td>@Html.TextBoxFor(modelItem => product.Amount, new { @class = "form-control col-md-2" })</td>
+                        <td>
+                            <a href=@Url.Action("RemoveProductFromCart", "BuyProducts", new { id = product.Product.id })>
+                                <i class='far fa-minus-square fa-2x'></i>
+                            </a>
+                            <a href=@Url.Action("AddProductToCart", "BuyProducts", new { id = product.Product.id })>
+                                <i class='far fa-plus-square fa-2x'></i>
+                            </a>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => product.Product_total_price) PLN</td>
+                        @{totalPrice += product.Product_total_price;}
+                    </tr>
+
+                            }
             }
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+    <div class="container">
+        <h3>Total price: @totalPrice PLN</h3>
+        @Html.ActionLink("Back to shop", "Index", "MainShop", null, new { @class = "btn btn-success" })
+        <div class="float-right">
+            @{ if (Model.Products.Capacity != 0)
+                {
+                    @Html.ActionLink("Checkout", "Index", "BasketOrder", null, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Checkout", "Index", "MainShop", null, new { @class = "btn btn-danger", onclick = "javascript:return false;" })
+                }
+            }
+        </div>
+    </div>
+</div>

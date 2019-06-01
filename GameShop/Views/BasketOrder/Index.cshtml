@@ -1,0 +1,112 @@
+﻿@model GameShop.Models.BasketOrderViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+
+    <h2>Order</h2>
+    <h2>Basket details</h2>
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Product</th>
+                <th class="col-xs-1">Amount</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int count = 1;
+                decimal totalPrice = 0.00m;
+                foreach (var product in Model.Products)
+                {
+
+                    <tr id="row-@count">
+                        <td>@(count++)</td>
+                        <td>@Html.DisplayFor(modelItem => product.Product.Product_name)</td>
+                        <td>@Html.DisplayFor(modelItem => product.Amount)</td>
+                        <td>@Html.DisplayFor(modelItem => product.Product_total_price) PLN</td>
+                        @{totalPrice += product.Product_total_price;}
+                    </tr>
+
+                }
+
+            }
+        </tbody>
+    </table>
+    <h3>Total price: @totalPrice PLN</h3>
+    <h2>Required informations</h2>
+    @using (Html.BeginForm("PayWithPayPal","BasketOrder",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        foreach (var order in Model.Order)
+        {
+            <div class="form-horizontal">
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => order.Address.Street, "Address street", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.Address.Street, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => order.Address.House_number, "House number", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.Address.House_number, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => order.Address.Flat_number, "Flat number", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.Address.Flat_number, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => order.Address.Zip_code, "Zip-code", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.Address.Zip_code, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => order.Address.Country, "Country", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.Address.Country, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => order.First_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.First_Name, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => order.Last_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.Last_Name, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => order.AspNetUsers.Email, "User email", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => order.Last_Name, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+

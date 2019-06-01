@@ -1,34 +1,35 @@
 ﻿@model GameShop.Models.MainShopViewModel
 
-<div class="col-sm-9">
-    <div id="products">
+
+<div class="col-lg-9">
+    <div id="products" class="row">
         @foreach (var product in Model.Products)
         {
-            <div class="item  col-xs-4 col-lg-4">
-                <div class="thumbnail">
-                    <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                    <div class="caption">
-                        <h4 class="group inner list-group-item-heading">
+            <div class="item col-lg-4 col-md-6 mb-4">
+                <div class="card ">
+                    <img class="card-img-top" src="https://via.placeholder.com/150" alt="" />
+                    <div class="card-body">
+                        <h4 class="card-title">
                             @Html.DisplayFor(modelItem => product.Product_name)
                         </h4>
-                        <p class="group inner list-group-item-text">
+                        <p>
                             @Html.DisplayFor(modelItem => product.Avalibility.Avalibility1)
                         </p>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6">
-                                <p class="lead">
-                                    @Html.DisplayFor(modelItem => product.Price) PLN
-                                </p>
-                            </div>
-                            <div class="col-xs-12 col-md-6">
-                                @Html.ActionLink("Add to cart","AddProductToCart","BuyProducts", new { id = product.id }, new { @class = "btn btn-success" })
-                                @Html.ActionLink("Details","ProductDetail", "MainShop", new { id = product.id }, new { @class = "btn btn-primary" })
-                            </div>
+
+                        <div class="card-text">
+                            <h5>
+                                @Html.DisplayFor(modelItem => product.Price) PLN
+                            </h5>
                         </div>
+                        <div class="card-footer">
+                            @Html.ActionLink("Buy", "AddProductToCart", "BuyProducts", new { id = product.id }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Details", "ProductDetail", "MainShop", new { id = product.id }, new { @class = "btn btn-primary" })
+                        </div>
+
                     </div>
                 </div>
 
             </div>
         }
     </div>
-    </div>
+</div>

@@ -17,28 +17,21 @@ namespace GameShop.ShoppingCart
         public static ShopCart GetCart(HttpContextBase context)
         {
             var cart = new ShopCart();
-            cart.CartId = cart.GetCartId(context);
+            cart.CartId =GetCartId(context);
             return cart;
 
         }
 
-        private string GetCartId(HttpContextBase context)
+        public static string GetCartId(HttpContextBase context)
         {
 
             if (context.Session[CartSessionKey] == null)
             {
-                if (!string.IsNullOrWhiteSpace(context.User.Identity.Name))
-                {
-                    context.Session[CartSessionKey] =
-                        context.User.Identity.Name;
-                }
-                else
-                {
                     // Generate a new random GUID using System.Guid class
                     Guid tempCartId = Guid.NewGuid();
                     // Send tempCartId back to client as a cookie
                     context.Session[CartSessionKey] = tempCartId.ToString();
-                }
+
             }
              return context.Session[CartSessionKey].ToString();
         }
@@ -68,6 +61,7 @@ namespace GameShop.ShoppingCart
             }
 
             db.SaveChanges();
+            
         }
 
         public void RemoveProduct(int id)
@@ -75,7 +69,6 @@ namespace GameShop.ShoppingCart
             var productCartItem = db.Products_to_order.SingleOrDefault(
                  c => c.Cart_Id == CartId && c.Product_id==id);
 
-            int? itemAmount=0;
             if (productCartItem != null)
             {
                 if (productCartItem.Amount > 1)
