@@ -43,7 +43,7 @@
         </tbody>
     </table>
     <div class="container">
-        <h3>Total price: @totalPrice PLN</h3>
+        <h3>Total price: @totalPrice.ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat) PLN</h3>
         @Html.ActionLink("Back to shop", "Index", "MainShop", null, new { @class = "btn btn-success" })
         <div class="float-right">
             @{ if (Model.Products.Capacity != 0)

@@ -37,7 +37,7 @@
             }
         </tbody>
     </table>
-    <h3>Total price: @totalPrice PLN</h3>
+    <h3>Total price: @totalPrice.ToString("N", System.Globalization.CultureInfo.GetCultureInfo("en-US").NumberFormat) PLN</h3>
     <h2>Required informations</h2>
     @using (Html.BeginForm("PayWithPayPal","BasketOrder",FormMethod.Post))
     {
