@@ -10,12 +10,15 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Globalization;
+using System.Net.Mail;
+using System.Net;
 
 namespace GameShop.Controllers
 {
     public class BasketOrderController : Controller
     {
         // GET: BasketOrder
+        [Authorize(Roles ="User, Admin, Manager")]
         public ActionResult Index()
         {
             ShopDBEntities db = new ShopDBEntities();
@@ -29,28 +32,26 @@ namespace GameShop.Controllers
             });
         }
 
+        [Authorize(Roles = "User, Admin, Manager")]
+        [HttpGet]
         public ActionResult PayPalPayment()
+            
         {
+            ShopDBEntities db = new ShopDBEntities();
             APIContext apiContext = PayPalConfiguration.GetAPIContext();
             try
             {
-                //A resource representing a Payer that funds a payment Payment Method as paypal  
-                //Payer Id will be returned when payment proceeds or click to pay  
+
                 string payerId = Request.Params["PayerID"];
                 if (string.IsNullOrEmpty(payerId))
                 {
-                    //this section will be executed first because PayerID doesn't exist  
-                    //it is returned by the create function call of the payment class  
-                    // Creating a payment  
-                    // baseURL is the url on which paypal sendsback the data.  
+
                     string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/BasketOrder/PayPalPayment?";
-                    //here we are generating guid for storing the paymentID received in session  
-                    //which will be used in the payment execution  
+
                     var guid = Convert.ToString((new Random()).Next(100000));
-                    //CreatePayment function gives us the payment approval url  
-                    //on which payer is redirected for paypal account payment  
+
                     var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
-                    //get links returned from paypal in response to Create function call  
+
                     var links = createdPayment.links.GetEnumerator();
                     string paypalRedirectUrl = null;
                     while (links.MoveNext())
@@ -58,20 +59,20 @@ namespace GameShop.Controllers
                         Links lnk = links.Current;
                         if (lnk.rel.ToLower().Trim().Equals("approval_url"))
                         {
-                            //saving the payapalredirect URL to which user will be redirected for payment  
+
                             paypalRedirectUrl = lnk.href;
                         }
                     }
-                    // saving the paymentID in the key guid  
+
                     Session.Add(guid, createdPayment.id);
                     return Redirect(paypalRedirectUrl);
                 }
                 else
                 {
-                    // This function exectues after receving all parameters for the payment  
+
                     var guid = Request.Params["guid"];
                     var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
-                    //If executed payment failed then we will show payment failure message to user  
+
                     if (executedPayment.state.ToLower() != "approved")
                     {
                         return View("FailureView");
@@ -81,17 +82,17 @@ namespace GameShop.Controllers
             catch (Exception ex)
             {
                 throw ex;
-                //return View("FailureView");
             }
             return View("SuccessView");
         }
 
+        [Authorize(Roles = "User, Admin, Manager")]
         [HttpPost]
         public ActionResult PayWithPayPal(FormCollection formCollection)
         {
             ShopDBEntities dBEntities = new ShopDBEntities();
             var products = ShopCart.GetCartId(this.HttpContext);
-            var productsToOrderId = dBEntities.Products_to_order.SingleOrDefault(c => c.Cart_Id == products) as Products_to_order;
+            var productsToOrderId = dBEntities.Products_to_order.Where(c => c.Cart_Id == products).ToList();
             
             Products_order order = new Products_order
             {
@@ -111,14 +112,17 @@ namespace GameShop.Controllers
                 Last_Name =formCollection["order.Last_Name"],
                 User_id = User.Identity.GetUserId(),
                 Total_price = Convert.ToDecimal(formCollection["order.Total_price"]),
-                Products_to_order_id = productsToOrderId.id_Products_to_order
+                Products_to_order_id = productsToOrderId[0].id_Products_to_order
             };
             dBEntities.Products_order.Add(order);
             dBEntities.SaveChanges();
 
+            sendOrderEmail(User.Identity.Name,false);
 
+            var idOrder = order.id;
             //Paypal
-            return RedirectToAction("PayPalPayment");
+            return RedirectToAction("PayPalPayment", "BasketOrder", new { id=idOrder });
+
             //on successful payment, show success page to user.
             //var tmpOrder = dBEntities.Products_order.Select(c => c.id == productsToOrderId.id_Products_to_order) as Products_order;
             //order.Payed = true;
@@ -127,6 +131,7 @@ namespace GameShop.Controllers
             //return View("SuccessView");
 
         }
+
 
         private Payment payment;
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
@@ -213,6 +218,37 @@ namespace GameShop.Controllers
                 redirect_urls = redirUrls
             };
             return this.payment.Create(apiContext);
+        }
+
+        private void sendOrderEmail(string userEmail,bool payed)
+        {
+            var basicCredential = new NetworkCredential("mygameshopadm@gmail.com", "HelloWorld1");
+            string companyEmail= "mygameshopadm@gmail.com";
+
+            MailMessage mail = new MailMessage(companyEmail, userEmail);
+
+            SmtpClient smtpClient = new SmtpClient();
+            smtpClient.Host = "smtp.gmail.com";
+            smtpClient.Port = 587;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = basicCredential;
+            smtpClient.EnableSsl = true;
+            //smtpClient.EnableSsl = true;
+            smtpClient.Timeout = 100000;
+            
+
+            mail.Subject = "Your order have been accepted";
+            if (payed)
+            {
+                mail.Body = "Hello " + User.Identity.Name + ".\nYour order have been added to our system. Please pay with PayPal.";
+            }
+            else
+            {
+                mail.Body = "Hello " + User.Identity.Name + ".\nYour order successful payed. We send your products soon";
+            }
+            smtpClient.Send(mail);
+
+
         }
     }
 }

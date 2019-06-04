@@ -13,6 +13,7 @@ namespace GameShop.Controllers
     {
         public ShopDBEntities db = new ShopDBEntities();
 
+        [Authorize(Roles = "User, Admin, Manager")]
         public ActionResult Index()
         {
             var cart = ShopCart.GetCart(this.HttpContext);
@@ -24,6 +25,8 @@ namespace GameShop.Controllers
         };
             return View(shopCartViewModel);
         }
+
+        [Authorize(Roles = "User, Admin, Manager")]
         public ActionResult AddProductToCart(int id)
         {
             var product = db.Product.Single(p=>p.id==id);
@@ -34,6 +37,7 @@ namespace GameShop.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "User, Admin, Manager")]
         public ActionResult RemoveProductFromCart(int id)
         {
             var cart = ShopCart.GetCart(this.HttpContext);

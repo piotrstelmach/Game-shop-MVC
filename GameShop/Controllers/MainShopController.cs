@@ -15,6 +15,8 @@ namespace GameShop.Controllers
         MainShopViewModel mainShopViewModel;
         ProductDetailViewModel productDetailViewModel;
         // GET: MainShop
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
             db = new ShopDBEntities();
@@ -26,6 +28,7 @@ namespace GameShop.Controllers
             return View(mainShopViewModel);
         }
 
+        [AllowAnonymous]
         public ActionResult GetProductByCategory(string categoryName)
         {
             db = new ShopDBEntities();
@@ -37,6 +40,7 @@ namespace GameShop.Controllers
             return PartialView("Product_partial", mainShopViewModel);
         }
 
+        [AllowAnonymous]
         public ActionResult ProductDetail(int id)
         {
             db = new ShopDBEntities();

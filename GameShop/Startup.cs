@@ -22,6 +22,24 @@ namespace GameShop
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
+            //var admin = new ApplicationUser { Email = "admin@gmail.com" };
+            //var manager = new ApplicationUser { Email = "manager@gmail.com" };
+
+            //var userman = UserManager.Create(admin, "DonVito3@");
+            //var userman1 = UserManager.Create(manager, "DonVito2!");
+
+            //if (userman.Succeeded)
+            //{
+            //    var result1 = UserManager.AddToRole(admin.Id, "Admin");
+
+            //}
+
+            //if (userman1.Succeeded)
+            //{
+            //    var result2 = UserManager.AddToRole(manager.Id, "Manager");
+
+            //}
+
 
             // In Startup iam creating first Admin Role and creating a default Admin User    
             if (!roleManager.RoleExists("Admin"))
@@ -50,6 +68,12 @@ namespace GameShop
                 roleManager.Create(role);
 
             }
+
+           
+
+
+            //UserManager.AddToRole(admin, "Admin");
+            // UserManager.AddToRole(manager.Id, "Manager");
         }
     }
 }

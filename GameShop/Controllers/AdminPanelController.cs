@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace GameShop.Controllers
 {
+    
     public class AdminPanelController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -50,11 +51,13 @@ namespace GameShop.Controllers
             }
         }
         // GET: AdminPanel
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult RegisterNew()
         {
             ApplicationDbContext context = new ApplicationDbContext();
@@ -64,6 +67,7 @@ namespace GameShop.Controllers
         }
 
         //POST: /adminpanel/register
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterAsAdminViewModel model)

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GameShop.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GameShop.Controllers
 {
@@ -79,7 +80,7 @@ namespace GameShop.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToLocal(Request.UrlReferrer.ToString());
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -153,6 +154,11 @@ namespace GameShop.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+
+                UserManager.AddToRole(user.Id, "User");
+
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
